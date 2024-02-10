@@ -13,24 +13,33 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 logging.info(f" Load the Gemini Pro Vision model ")
 model = genai.GenerativeModel("gemini-pro-vision")
 
-def get_image(file):
-    try:
-        logging.info(f"Open Image File")
-        image = Image.open(file)
-        return image
-    except Exception as e:
-        raise ImageAnalysisException(e,sys)
+class MainFunction:
+    def __init__(self):
+        try:
+            self.file_path = None
+            self.image = None
+            self.input = None
+        except Exception as e:
+            raise ImageAnalysisException
+        
+    def get_image(self,file_path):
+        try:
+            logging.info(f"Open Image File")
+            self.image = Image.open(file_path)
+            return self.image
+        except Exception as e:
+            raise ImageAnalysisException(e,sys)
 
 
 
-def get_response(image,input):
-    try:
-        logging.info(f"extract the information from given document")
-        response = model.generate_content([image,input])
-        result = response.text
-        return {f"{input}":result,}
-    except Exception as e:
-        raise ImageAnalysisException(e,sys)
+    def get_response(self,image,input):
+        try:
+            logging.info(f"extract the information from given document")
+            self.response = model.generate_content([image,input])
+            self.result = self.response.text
+            return {f"{input}":self.result}
+        except Exception as e:
+            raise ImageAnalysisException(e,sys)
     
 
 
