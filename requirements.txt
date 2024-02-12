@@ -2,4 +2,5 @@ streamlit
 google-generativeai
 python-dotenv
 dump
+boto3
 #-e .

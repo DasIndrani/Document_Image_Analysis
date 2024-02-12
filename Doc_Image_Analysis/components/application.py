@@ -1,9 +1,10 @@
-import sys
+import os,sys
 import streamlit as st
 from Doc_Image_Analysis.logger import logging
 from Doc_Image_Analysis.exception import ImageAnalysisException
 from Doc_Image_Analysis.components.main import MainFunction
-from Doc_Image_Analysis.utils import save_object,logged_in,sign_up,page_1
+from Doc_Image_Analysis.utils import save_responses,logged_in,sign_up,page_1,upload_to_s3
+
 
 class App:
     def __init__(self,main_function:MainFunction):
@@ -59,9 +60,10 @@ class App:
             reset = st.button("Reset :arrows_counterclockwise:")
 
             if st.session_state.responses:
-                save_object(response=st.session_state.responses, reset=reset)
-                    
-                st.success(f"Information saved to output folder")
+                save_responses(response=st.session_state.responses, reset=reset)
+                upload_to_s3(local_folder_path=os.getenv("OUTPUT_FOLDER"),bucket_name=os.getenv("BUCKET_NAME"),s3_folder_prefix="Outbox")
+
+                st.success(f"Information saved to  s3 outbox folder")
 
             logging.info(f" After Extract all information from a doc reset all list as empty list ")
             if reset:

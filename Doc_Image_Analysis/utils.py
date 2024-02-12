@@ -1,7 +1,9 @@
 import os,sys
 import json, dump
 import streamlit as st
+import boto3
 from Doc_Image_Analysis.exception import ImageAnalysisException
+from Doc_Image_Analysis.logger import logging
 
 
 Output_folder = "Output"
@@ -13,7 +15,7 @@ Users ={}
 
 
 
-def save_object(response,reset):
+def save_responses(response,reset):
     try:
         filepath = os.listdir(Output_folder)
         i=len(filepath)
@@ -90,6 +92,21 @@ def page_1():
     page_1 = st.set_page_config(page_title= "DIA System",layout="centered",page_icon=":ice-cube:")
     return page_1
 
+
+s3 = boto3.client('s3')
+
+def upload_to_s3(local_folder_path,s3_folder_prefix,bucket_name):
+    try:
+        for root, dirs, files in os.walk(local_folder_path):
+            for file_name in files:
+                local_file_path = os.path.join(root, file_name)
+                # Calculate the S3 object key based on the local file's path and the desired prefix
+                relative_file_path = os.path.relpath(local_file_path, local_folder_path)
+                s3_object_key = os.path.join(s3_folder_prefix, relative_file_path)
+                s3.upload_file(local_file_path, bucket_name, s3_object_key)
+                logging.info(f"Uploaded '{local_file_path}' to '{bucket_name}/{s3_object_key}'")
+    except Exception as e:
+        raise ImageAnalysisException(e,sys)
 
 
 
