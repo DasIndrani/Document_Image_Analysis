@@ -27,7 +27,7 @@ class App:
                 st.session_state.input_list.append(input_text)
 
 
-            st.sidebar.title("Upload Image file of Document")
+            st.sidebar.title("Upload image file of Document")
             uploaded_file = st.sidebar.file_uploader(label= ":file_folder: choose a file...",type=["jpeg","png","jpg"])
 
 
