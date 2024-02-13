@@ -24,7 +24,7 @@ class MainFunction:
         
     def get_image(self,file_path):
         try:
-            logging.info(f"Open Image File")
+            logging.info(f"open Image File")
             self.image = Image.open(file_path)
             return self.image
         except Exception as e:
