@@ -72,7 +72,7 @@ jobs:
 
       - name: Setting env
         env:
-          GOOGLE_API_KEY : "${{ secrets.GOOGLE_API_KEY }}"
+          GOOGLE_API_KEY : ${{ secrets.GOOGLE_API_KEY }}
           BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
         run: | 
          echo "Environment variable BUCKET_NAME is set to $BUCKET_NAME"
