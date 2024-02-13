@@ -74,8 +74,9 @@ jobs:
         env:
           GOOGLE_API_KEY : "${{ secrets.GOOGLE_API_KEY }}"
           BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
-        run: echo "Environment variable BUCKET_NAME is set to $BUCKET_NAME"
-        run: echo "Environment variable GOOGLE_API_KEY is set to $GOOGLE_API_KEY"
+        run: | 
+         echo "Environment variable BUCKET_NAME is set to $BUCKET_NAME"
+         echo "Environment variable GOOGLE_API_KEY is set to $GOOGLE_API_KEY"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
