@@ -10,7 +10,7 @@ load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 
-logging.info(f" Load the Gemini Pro Vision model ")
+logging.info(f"Load the Gemini Pro Vision model ")
 model = genai.GenerativeModel("gemini-pro-vision")
 
 class MainFunction:
