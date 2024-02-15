@@ -15,6 +15,7 @@ Users ={}
 def output_folder():
     Output_dir = "Output"
     os.makedirs(Output_dir, exist_ok=True)
+    return Output_dir
 
 def save_responses(response,reset):
     try:

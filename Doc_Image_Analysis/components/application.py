@@ -61,8 +61,7 @@ class App:
 
             if st.session_state.responses:
                 save_responses(response=st.session_state.responses, reset=reset)
-                output_folder = output_folder()
-                upload_to_s3(local_folder_path=output_folder,bucket_name=os.getenv("BUCKET_NAME"),s3_folder_prefix="Outbox")
+                upload_to_s3(local_folder_path=output_folder(),bucket_name=os.getenv("BUCKET_NAME"),s3_folder_prefix="Outbox")
 
                 st.success(f"Information saved to  s3 outbox folder")
 
