@@ -10,7 +10,7 @@ import google.ai.generativelanguage as glm
 genai.configure(api_key=os.environ.get('GOOGLE_API_KEY'))
 
 
-logging.info(f"Load the Gemini Pro Vision model ")
+logging.info(f"Load The Gemini Pro Vision model ")
 model = genai.GenerativeModel("gemini-pro-vision")
 
 class MainFunction:
