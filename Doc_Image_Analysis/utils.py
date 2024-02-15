@@ -13,9 +13,12 @@ os.makedirs(Users_information,exist_ok=True)
 Users ={}
 
 def output_folder():
-    Output_dir = "Output"
-    os.makedirs(Output_dir, exist_ok=True)
-    return Output_dir
+    try:
+        Output_dir = "Output"
+        os.makedirs(Output_dir, exist_ok=True)
+        return Output_dir
+    except Exception as e:
+        raise ImageAnalysisException(e,sys)
 
 def save_responses(response,reset):
     try:
