@@ -74,6 +74,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
           aws ec2 create-tags --resources i-02fcac93abc00f9a2 --tags Key=GOOGLE_API_KEY,Value=${{ secrets.GOOGLE_API_KEY }}
 
