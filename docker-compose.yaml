@@ -3,6 +3,11 @@ services:
  Application:
     image: ${IMAGE_NAME}
     container_name: document_image_analysis
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
     ports:
       - "8501:8501"
     
