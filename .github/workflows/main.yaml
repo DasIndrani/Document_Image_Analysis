@@ -70,13 +70,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setting env
+      - name: Set Google API key
         env:
-          GOOGLE_API_KEY : ${{ secrets.GOOGLE_API_KEY }}
-          BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
-        run: | 
-         echo "Environment variable BUCKET_NAME is set to $BUCKET_NAME"
-         echo "Environment variable GOOGLE_API_KEY is set to $GOOGLE_API_KEY"
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: |
+          # Here you can run commands that use the GOOGLE_API_KEY environment variable
+          echo "Using Google API key: $GOOGLE_API_KEY"
+          # Run your application or script here that requires the API key
+
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1

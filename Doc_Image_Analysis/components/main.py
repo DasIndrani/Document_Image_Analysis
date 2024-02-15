@@ -2,12 +2,12 @@ import os,sys
 from Doc_Image_Analysis.logger import logging
 from Doc_Image_Analysis.exception import ImageAnalysisException
 import google.generativeai as genai
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 from PIL import Image
 import google.ai.generativelanguage as glm
-load_dotenv()
+#load_dotenv()
 
-genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
+genai.configure(api_key=os.environ.get('GOOGLE_API_KEY'))
 
 
 logging.info(f"Load the Gemini Pro Vision model ")
