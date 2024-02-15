@@ -6,25 +6,27 @@ from Doc_Image_Analysis.exception import ImageAnalysisException
 from Doc_Image_Analysis.logger import logging
 
 
-Output_folder = "Output"
-os.makedirs(Output_folder, exist_ok=True)
+
 
 Users_information = "Users_Information"
 os.makedirs(Users_information,exist_ok=True)
 Users ={}
 
-
+def output_folder():
+    Output_dir = "Output"
+    os.makedirs(Output_dir, exist_ok=True)
 
 def save_responses(response,reset):
     try:
-        filepath = os.listdir(Output_folder)
+        Output_dir= output_folder() 
+        filepath = os.listdir(Output_dir)
         i=len(filepath)
         if not reset:
-            json_file_path = os.path.join(Output_folder,"responses.json")
+            json_file_path = os.path.join(Output_dir,"responses.json")
             with open(json_file_path, "w") as json_file:
                 json.dump(response, json_file,indent=1)
         else:
-            json_file_path = os.path.join(Output_folder,f"responses_{i+1}.json")
+            json_file_path = os.path.join(Output_dir,f"responses_{i+1}.json")
             with open(json_file_path, "w") as json_file:
                 json.dump(response, json_file,indent=1)
 

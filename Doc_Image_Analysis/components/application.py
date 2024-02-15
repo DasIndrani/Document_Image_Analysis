@@ -3,7 +3,7 @@ import streamlit as st
 from Doc_Image_Analysis.logger import logging
 from Doc_Image_Analysis.exception import ImageAnalysisException
 from Doc_Image_Analysis.components.main import MainFunction
-from Doc_Image_Analysis.utils import save_responses,logged_in,sign_up,page_1,upload_to_s3
+from Doc_Image_Analysis.utils import save_responses,logged_in,sign_up,page_1, output_folder,upload_to_s3
 
 
 class App:
@@ -61,7 +61,8 @@ class App:
 
             if st.session_state.responses:
                 save_responses(response=st.session_state.responses, reset=reset)
-                upload_to_s3(local_folder_path=os.getenv("OUTPUT_FOLDER"),bucket_name=os.getenv("BUCKET_NAME"),s3_folder_prefix="Outbox")
+                output_folder = output_folder()
+                upload_to_s3(local_folder_path=output_folder,bucket_name=os.getenv("BUCKET_NAME"),s3_folder_prefix="Outbox")
 
                 st.success(f"Information saved to  s3 outbox folder")
 
