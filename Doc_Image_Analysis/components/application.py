@@ -4,7 +4,7 @@ from Doc_Image_Analysis.logger import logging
 from Doc_Image_Analysis.exception import ImageAnalysisException
 from Doc_Image_Analysis.components.main import MainFunction
 from Doc_Image_Analysis.utils import save_responses,logged_in,sign_up,page_1,upload_to_s3
-
+import google.generativeai as genai
 
 class App:
     def __init__(self,main_function:MainFunction):
@@ -14,6 +14,10 @@ class App:
             raise ImageAnalysisException(e,sys) 
     def main_app(self):
         try:
+            genai.configure(api_key=os.environ.get('GOOGLE_API_KEY'))
+            logging.info(f"Load the Gemini Pro Vision model ")
+            model = genai.GenerativeModel("gemini-pro-vision")
+            st.write("successfully load the model")
             logging.info(f" Configure the App Page ")
             st.subheader(":key: Extract key information from Document")
 
@@ -49,7 +53,7 @@ class App:
             if sumbit_button:
                 new_inputs = [input for input in st.session_state.input_list if input not in st.session_state.executed]
                 for input in new_inputs:
-                    response = self.main_function.get_response(image=image, input=input)
+                    response = self.main_function.get_response(image=image, input=input,model=model)
                     st.session_state.executed.append(input)
                     st.session_state.responses.append(response)
                     st.write(response)

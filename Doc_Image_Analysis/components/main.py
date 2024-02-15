@@ -8,12 +8,7 @@ from PIL import Image
 import google.ai.generativelanguage as glm
 #load_dotenv()
 
-genai.configure(api_key=os.environ.get('GOOGLE_API_KEY'))
 
-
-logging.info(f"Load the Gemini Pro Vision model ")
-model = genai.GenerativeModel("gemini-pro-vision")
-st.write("successfully load the model")
 
 class MainFunction:
     def __init__(self):
@@ -34,7 +29,7 @@ class MainFunction:
 
 
 
-    def get_response(self,image,input):
+    def get_response(self,image,input,model):
         try:
             logging.info(f"extract the information from given document")
             self.response = model.generate_content([image,input])
