@@ -1,5 +1,4 @@
 import os,sys
-import streamlit as st
 from Doc_Image_Analysis.logger import logging
 from Doc_Image_Analysis.exception import ImageAnalysisException
 import google.generativeai as genai
@@ -8,7 +7,11 @@ from PIL import Image
 import google.ai.generativelanguage as glm
 #load_dotenv()
 
+genai.configure(api_key=os.environ.get('GOOGLE_API_KEY'))
 
+
+logging.info(f"Load the Gemini Pro Vision model ")
+model = genai.GenerativeModel("gemini-pro-vision")
 
 class MainFunction:
     def __init__(self):
@@ -29,7 +32,7 @@ class MainFunction:
 
 
 
-    def get_response(self,image,input,model):
+    def get_response(self,image,input):
         try:
             logging.info(f"extract the information from given document")
             self.response = model.generate_content([image,input])
