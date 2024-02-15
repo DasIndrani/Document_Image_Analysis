@@ -1,4 +1,5 @@
 import os,sys
+import streamlit as st
 from Doc_Image_Analysis.logger import logging
 from Doc_Image_Analysis.exception import ImageAnalysisException
 import google.generativeai as genai
@@ -12,6 +13,7 @@ genai.configure(api_key=os.environ.get('GOOGLE_API_KEY'))
 
 logging.info(f"Load the Gemini Pro Vision model ")
 model = genai.GenerativeModel("gemini-pro-vision")
+st.write("successfully load the model")
 
 class MainFunction:
     def __init__(self):
