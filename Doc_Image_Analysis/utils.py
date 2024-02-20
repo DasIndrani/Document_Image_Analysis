@@ -1,4 +1,4 @@
-import os,sys
+import os,sys,glob
 import json, dump
 import streamlit as st
 import boto3
@@ -25,11 +25,16 @@ def save_responses(response,reset):
         Output_dir= output_folder() 
         filepath = os.listdir(Output_dir)
         i=len(filepath)
-        if not reset:
-            json_file_path = os.path.join(Output_dir,"responses.json")
+        files = glob.glob(os.path.join(Output_dir, "responses_*"))
+        file_numbers = [int(os.path.splitext(os.path.basename(filename))[0].split("_")[1]) for filename in files]
+        if st.session_state.logged_in and reset:
+            if files:
+                last_file_number = max(file_numbers)
+            json_file_path = os.path.join(Output_dir, f"responses_{last_file_number}.json")
             with open(json_file_path, "w") as json_file:
                 json.dump(response, json_file,indent=1)
-        else:
+
+        if not reset:
             json_file_path = os.path.join(Output_dir,f"responses_{i+1}.json")
             with open(json_file_path, "w") as json_file:
                 json.dump(response, json_file,indent=1)
@@ -56,7 +61,7 @@ def sign_up():
     try:
         st.header("Sign Up")
         new_username = st.text_input("New_Username",placeholder="enter new username")
-        new_password = st.text_input("New_Password",type="password",placeholder="enter new password")
+        new_password = st.text_input("New_Password",type="password",placeholder="enter new password",max_chars=16)
 
         if st.button(label="Enter New Username & Password"):
             if new_username in Users:
@@ -93,11 +98,29 @@ def logged_in():
             
     except Exception as e:
         raise ImageAnalysisException(e,sys)
+ 
+def logged_out():
+    st.header("Log out")
+    log_out = st.button("log out")
+    if log_out:
+        st.session_state.input_list = []
+        st.session_state.responses = []
+        st.session_state.executed =[]
+        st.session_state.logged_in = False
+        with st.container():
+            st.markdown("Are you sure you want to log out?")
+            col1, col2 = st.columns(2)
+            if col1.button("Yes"):
+                return True
+            if col2.button("No"):
+                return False
+            
+    
+            
     
 def page_1():
     page_1 = st.set_page_config(page_title= "DIA System",layout="centered",page_icon=":ice-cube:")
     return page_1
-
 
 s3 = boto3.client('s3')
 
@@ -113,6 +136,5 @@ def upload_to_s3(local_folder_path,s3_folder_prefix,bucket_name):
                 logging.info(f"Uploaded '{local_file_path}' to '{bucket_name}/{s3_object_key}'")
     except Exception as e:
         raise ImageAnalysisException(e,sys)
-
 
 

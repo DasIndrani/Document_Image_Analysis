@@ -3,7 +3,7 @@ import streamlit as st
 from Doc_Image_Analysis.logger import logging
 from Doc_Image_Analysis.exception import ImageAnalysisException
 from Doc_Image_Analysis.components.main import MainFunction
-from Doc_Image_Analysis.utils import save_responses,logged_in,sign_up,page_1, output_folder,upload_to_s3
+from Doc_Image_Analysis.utils import save_responses,logged_in,logged_out,sign_up,page_1, output_folder,upload_to_s3
 
 
 class App:
@@ -70,7 +70,7 @@ class App:
                 st.session_state.input_list = []
                 st.session_state.responses = []
                 st.session_state.executed =[]
-
+                
         except Exception as e:
             raise ImageAnalysisException(e,sys)
 
@@ -78,8 +78,8 @@ class App:
         try:
             page_1()
             st.header(" :ice_cube: Welcome To DIA (Document Image Analysis)",divider='rainbow')
-            page_options = ['Login', 'Sign Up']
-            selected_page = st.sidebar.selectbox('Login/Signup :point_down:',placeholder="choose an option",index=None, options=page_options)
+            page_options = ['Login', 'Sign Up', 'Log out']
+            selected_page = st.sidebar.selectbox('Sign-up/Login/Logout :point_down:',placeholder="choose an option",index=None, options=page_options)
 
             if selected_page == 'Login':
                 if 'logged_in'  not in st.session_state or not st.session_state.logged_in:
@@ -87,6 +87,14 @@ class App:
                 
                 elif 'logged_in' in st.session_state and st.session_state.logged_in:
                     self.main_app()
+
+            if selected_page == 'Log out':
+                if 'logged_in' in st.session_state and st.session_state.logged_in:
+                    logged_out()
+                else:
+                    st.write("You are not logged-in! please login/sign-up")
+                
+                    
 
             if selected_page == "Sign Up":
                 if 'sign_up' not in st.session_state or not st.session_state.sign_up:
@@ -96,6 +104,7 @@ class App:
                         logged_in()
                     elif 'logged_in' in st.session_state and st.session_state.logged_in:
                         self.main_app()
+                        
         except Exception as e:
             raise ImageAnalysisException(e,sys)
         
