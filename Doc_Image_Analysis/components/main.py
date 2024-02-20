@@ -34,7 +34,7 @@ class MainFunction:
 
     def get_response(self,image,input):
         try:
-            logging.info(f"extract the information from given document")
+            logging.info(f"Extract the information from given document")
             self.response = model.generate_content([image,input])
             self.result = self.response.text
             return {f"{input}":self.result}
