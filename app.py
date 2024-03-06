@@ -1,5 +1,5 @@
 import sys
-from Doc_Image_Analysis.components.application import App
+from Doc_Image_Analysis.components.web_app import App
 from Doc_Image_Analysis.components.main import MainFunction
 from Doc_Image_Analysis.exception import ImageAnalysisException
 

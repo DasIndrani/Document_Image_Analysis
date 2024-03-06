@@ -64,9 +64,11 @@ def sign_up():
         new_password = st.text_input("New_Password",type="password",placeholder="enter new password",max_chars=16)
 
         if st.button(label="Enter New Username & Password"):
-            if new_username in Users:
-                st.error("Try Another :warning:")
-                return False
+            if os.path.exists(os.path.join(Users_information,"info.json")):
+                User_info = load_info()
+                if new_username in User_info:
+                    st.error("Try Another :warning:")
+                    return False
             else:
                 Users[new_username] = new_password
                 st.session_state.sign_up = True
